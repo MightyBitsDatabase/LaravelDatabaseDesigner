@@ -168,14 +168,21 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     });
 
-
-
     viewNodeCanvas.on("canvas:save", function() {
-        if (typeof process != 'undefined') {
-            $("#fileSaveDialog").trigger("click");
-        } else {
 
-        }
+      var filename = dialog.showSaveDialog({
+        title: "Save as Skema file",
+        defaultPath: "",
+        filters: [
+          {name: 'MightyBits Skema', extensions: ['skema']},
+        ]
+      });
+
+      if(typeof(filename) !== 'undefined')
+      {
+        fs.writeFileSync(filename, JSON.stringify(DesignerApp.NodeEntities.ExportToJSON()));
+      }
+
     });
 
     viewNodeCanvas.on("canvas:saveas", function() {

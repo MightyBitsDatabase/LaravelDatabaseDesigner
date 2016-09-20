@@ -1,3 +1,8 @@
+const {app, dialog} = require('electron').remote
+var remote = require('electron').remote;
+var fs = remote.require('fs')
+var path = remote.require('path')
+
 
 var GITHUB_CLIENT_ID = '25bbf727cf799dcb1081';
 var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
