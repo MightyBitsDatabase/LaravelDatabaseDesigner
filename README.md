@@ -1,15 +1,10 @@
 Laravel Database Designer
 =========
 
-Laravel Database Designer is a graphical migration tools for creating database schema for Laravel 4 PHP Framework. Laravel Database Designer is heavily inspired by Laravel Schema Designer (http://laravelsd.com) Start using LaravelDB Designer here http://biodesignrealworld.github.io/LaravelDatabaseDesigner/
+Laravel Database Designer is a graphical migration tools for creating database schema for Laravel 5 PHP Framework. Laravel Database Designer is heavily inspired by Laravel Schema Designer (http://laravelsd.com) Start using LaravelDB Designer here http://biodesignrealworld.github.io/LaravelDatabaseDesigner/
 
 
 ![screnshot](http://biodesignrealworld.github.io/LaravelDatabaseDesigner/screenshot.png)
-
-Roadmap
-=========
-* Make Django Version
-* [0.3] Import Laravel Project to ERD
 
 
 Version
