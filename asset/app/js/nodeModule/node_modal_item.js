@@ -146,9 +146,16 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
             this.trigger("okClicked", Backbone.Syphon.serialize(this));
         },
          render: function() {
-
+            console.log(this.model)
             this.$el.html(this.template(this.model.toJSON()));
+            
+            
             this.$('#type').find('option[value=' + this.model.get('type') + ']').attr('selected', 'selected');
+            this.$('#html_input').find('option[value=' + this.model.get('html_input') + ']').attr('selected', 'selected');
+            this.$('#input_validation').find('option[value=' + this.model.get('input_validation') + ']').attr('selected', 'selected');
+
+
+
             this.changeColumnType(this);
 
             var chk_box = ["pk", "nu", "un", "ui", "in", "ai", "visible", "hidden", "guarded", "fillable"];

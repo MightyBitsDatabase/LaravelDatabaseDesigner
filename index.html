@@ -103,6 +103,36 @@
                         </select>
                     </div>
                 </div>
+                 <!-- Select HTML input -->
+                <div class="form-group">
+                    <label class="control-label" for="html_input">Html Input</label>
+                    <div class="">
+                        <select id="html_input" name="html_input" class="form-control">
+                            <optgroup label="Html input types">                              
+                                <option value="text">text</option>
+                                <option value="textarea">textarea</option>
+                                <option value="email">email</option>
+                                <option value="date">date</option>
+                                <option value="number">number</option>
+                                <option value="password">password</option>
+                                <option value="file">file</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>   
+                 <!-- Select Validation -->
+                <div class="form-group">
+                    <label class="control-label" for="input_validation">Validation</label>
+                    <div class="">
+                        <select id="input_validation" name="input_validation" class="form-control">
+                            <optgroup label="Validation types">                              
+                                <option value="required">required</option>
+                                <option value="email">email</option>
+                                <option value="numeric">numeric</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>                     
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="control-label" for="length">Length</label>
@@ -154,12 +184,20 @@
                                 Unsigned Integer
                             </label>
                         </div>
-                        <div class="checkbox">
+                      <div class="checkbox">
                             <label for="in">
                                 <input type="checkbox" name="in" id="in" value="Index">
                                 Index
                             </label>
                         </div>
+                    </div>
+                </div>    
+
+                <!-- Multiple Checkboxes -->
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="columnOption">Option</label>
+                    <div class="">
+                        
                         <div class="checkbox">
                             <label for="un">
                                 <input type="checkbox" name="un" id="un" value="Unique Index">
@@ -191,9 +229,9 @@
                                 Hidden
                             </label>
                         </div>
+                      
                     </div>
-                </div>    
-
+                </div>  
 
                             <div class="col-md-4 form-group">
                     <label class="control-label" for="columnOption">Generator Option</label>
