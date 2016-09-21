@@ -104,3 +104,20 @@ MightyBits.clearCanvas = function() {
   DesignerApp.NodeEntities.ClearNodeCanvas(DesignerApp.NodeEntities.CurrentNodeCanvas);
 }
 
+MightyBits.test = function() {
+  MightyBits.ipc.sendParam('settitle', title, function(){});
+}
+
+
+MightyBits.generatePlatform = function() {
+  var param = {
+    skema_path : '/Users/xcorex/Documents/Projects/Node/jsLaravelGenerator/skema/testing.skema',
+    destination_dir : '/Users/xcorex/deploy2'
+  }
+
+  MightyBits.ipc.sendParam('generate', param, function(){
+    console.log("generate done")
+  });
+
+}
+

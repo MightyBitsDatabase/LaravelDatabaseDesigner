@@ -1,0 +1,3 @@
+[submodule "asset/app/js/generator"]
+	path = asset/app/js/generator
+	url = https://badgeek@github.com/MightyBitsDatabase/SchemaToPageBuilder.git

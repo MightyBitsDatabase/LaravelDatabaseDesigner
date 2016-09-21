@@ -1,6 +1,14 @@
 const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 
+
+const generator = require('./asset/app/js/generator/generator.js');
+
+var sendIPCresp = function(event, count, data)
+{
+  event.sender.send('done-ipc'+count, data)
+}
+
 var processIPCMsg = function(event, count, data) {  
 
   var command = data['command'];
@@ -11,6 +19,11 @@ var processIPCMsg = function(event, count, data) {
     case 'settitle':
       mainWindow.setTitle(params)
       break;      
+    case 'generate':
+      generator.generateFromSkemaTo(params.skema_path, params.destination_dir);
+      response['generate'] = 'done';
+      sendIPCresp(event, count, response);
+      break;
     default:
       break;
   }
