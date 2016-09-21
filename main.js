@@ -1,11 +1,25 @@
 const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 
+var processIPCMsg = function(event, count, data) {  
 
-ipcMain.on('open-schema-file', (event, arg) => {
-   
+  var command = data['command'];
+  var params = data['params'];
+  var response = {};
 
-});
+  switch (command) {
+    case 'settitle':
+      mainWindow.setTitle(params)
+      break;      
+    default:
+      break;
+  }
+
+}
+
+ipcMain.on('do-ipc', (event, arg) => {
+  processIPCMsg(event, arg.count, arg.command);   
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
