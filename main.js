@@ -1,28 +1,9 @@
-const electron = require('electron')
-// Module to control application life.
-const app = electron.app
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-
-// In main process.
-const {ipcMain} = require('electron');
-const {dialog}  = require('electron');
-
+const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('electron');
 const fs = require('fs');
+
 
 ipcMain.on('open-schema-file', (event, arg) => {
    
-   dialog.showOpenDialog({properties: ['openFile']}, function(fileName){
-      if (fileName === undefined)
-      {
-        event.returnValue = "";
-      }else{
-        fs.readFile(fileName[0], 'utf-8', function (err, data) {
-            var jsonfile = (JSON.parse(data));
-            event.returnValue = jsonfile;
-        });  
-      } 
-   });
 
 });
 
@@ -69,6 +50,8 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+
+
 })
 
 // In this file you can include the rest of your app's specific main process

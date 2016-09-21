@@ -1,6 +1,5 @@
 DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Backbone, Marionette, $, _) {
 
-    const {ipcRenderer} = require('electron');
 
     var viewNodeCanvas = Controller.viewNodeCanvas;
 
@@ -85,20 +84,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
 
     viewNodeCanvas.on("canvas:open", function() {
-
-        if (typeof process.versions.electron != 'undefined') {
-
-                var schema = ipcRenderer.sendSync('open-schema-file');
-                
-                if (schema != "")
-                {
-                       DesignerApp.NodeEntities.ClearNodeCanvas(DesignerApp.NodeEntities.getNodeCanvas());
-                       DesignerApp.NodeEntities.AddNodeCanvas(schema);                    
-                }
-
-        } else {
-
-        }
+        MightyBits.open()
     });
 
 
@@ -169,33 +155,19 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     });
 
     viewNodeCanvas.on("canvas:save", function() {
-
-      var filename = dialog.showSaveDialog({
-        title: "Save as Skema file",
-        defaultPath: "",
-        filters: [
-          {name: 'MightyBits Skema', extensions: ['skema']},
-        ]
-      });
-
-      if(typeof(filename) !== 'undefined')
-      {
-        fs.writeFileSync(filename, JSON.stringify(DesignerApp.NodeEntities.ExportToJSON()));
-      }
-
+        MightyBits.save()
     });
 
     viewNodeCanvas.on("canvas:saveas", function() {
-        console.log("save as");
+        MightyBits.saveas()
     });
 
     viewNodeCanvas.on("canvas:loadexample", function() {
-        DesignerApp.NodeEntities.ClearNodeCanvas(DesignerApp.NodeEntities.CurrentNodeCanvas);
-        DesignerApp.NodeEntities.AddNodeCanvas(node_data);
+        MightyBits.loadExample()
     });
 
     viewNodeCanvas.on("canvas:clearcanvas", function() {
-        DesignerApp.NodeEntities.ClearNodeCanvas(DesignerApp.NodeEntities.CurrentNodeCanvas);
+        MightyBits.clearCanvas()
     });
 
     viewNodeCanvas.on("canvas:generate", function() {
