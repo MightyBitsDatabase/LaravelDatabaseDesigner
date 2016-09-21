@@ -1,8 +1,13 @@
 const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('electron');
 const fs = require('fs');
-
-
+const os = require('os');
 const generator = require('./asset/app/js/generator/generator.js');
+
+if (os.platform() === 'win32') {
+  app.setPath("userData", app.getAppPath().replace("\resources\app.asar", ""))
+}else if (os.platform() === 'darwin') {
+  app.setPath("userData", app.getAppPath().replace("/MightyBits.app/Contents/Resources/app.asar", ""))
+}
 
 var sendIPCresp = function(event, count, data)
 {
