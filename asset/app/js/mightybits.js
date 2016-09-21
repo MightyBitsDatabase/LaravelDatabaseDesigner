@@ -70,10 +70,8 @@ MightyBits.saveAsFile = function() {
 
 MightyBits.open = function() {
   dialog.showOpenDialog({properties: ['openFile']}, function(fileName){
-    if (fileName === undefined)
+    if (fileName !== undefined)
     {
-      event.returnValue = "";
-    }else{
       fs.readFile(fileName[0], 'utf-8', function (err, data) {
           var jsonfile = (JSON.parse(data));
           
