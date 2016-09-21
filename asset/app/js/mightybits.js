@@ -3,9 +3,14 @@ const {ipcRenderer} = require('electron');
 
 var remote = require('electron').remote;
 var fs = remote.require('fs')
+var fsextra = remote.require('fs-extra')
 var path = remote.require('path')
+var zlib = remote.require('zlib')
+var targz = remote.require('tar.gz')
+var os = remote.require('os')
 
 var MightyBits = {}
+
 
 MightyBits.config = {
   showSidebar : 1,
@@ -17,6 +22,14 @@ MightyBits.config = {
   linter: [],
   templatePath :  app.getPath('userData')
 }
+
+if (os.platform() === 'win32') {
+  MightyBits.config.templatePath = app.getAppPath().replace("\resources\app.asar", "")
+}else if (os.platform() === 'darwin') {
+  MightyBits.config.templatePath = app.getAppPath().replace("/MightyBits.app/Contents/Resources/app.asar", "")
+}
+
+// console.log(MightyBits.config.templatePath)
 
 MightyBits.example_schema = [{"name":"BlogUsers","color":"Red","position":{"x":93,"y":126},"classname":"BlogUser","namespace":"","increment":false,"timestamp":true,"softdelete":false,"column":[{"name":"id","type":"increments","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c87","order":0},{"name":"username","type":"string","length":"","defaultvalue":"bogus","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c185","order":1},{"name":"password","type":"string","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c193","order":2},{"name":"profile","type":"text","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c201","order":3}],"relation":[{"extramethods":"","foreignkeys":"","name":"postsz","relatedmodel":"Post","relationtype":"hasMany","usenamespace":""}],"seeding":[[{"colid":"c87","content":"0"},{"colid":"c185","content":"badgeek"},{"colid":"c193","content":"test123"},{"colid":"c201","content":"profile 0"}],[{"colid":"c87","content":"1"},{"colid":"c185","content":"hello"},{"colid":"c193","content":"test123"},{"colid":"c201","content":"profile 1"}],[{"colid":"c87","content":"2"},{"colid":"c185","content":"void"},{"colid":"c193","content":"test123"},{"colid":"c201","content":"profile 2"}],[{"colid":"c87","content":"3"},{"colid":"c185","content":"john"},{"colid":"c193","content":"john123"},{"colid":"c201","content":"profile 3"}]]},{"name":"Posts","color":"Green","position":{"x":660,"y":231},"classname":"Post","namespace":"","increment":false,"timestamp":false,"softdelete":false,"column":[{"name":"id","type":"increments","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c95","order":0},{"name":"title","type":"string","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c218","order":1},{"name":"content","type":"text","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c226","order":2}],"relation":[{"extramethods":"","foreignkeys":"","name":"Categories","relatedmodel":"Category","relationtype":"hasMany","usenamespace":""}],"seeding":[]},{"name":"Categories","color":"Blue","position":{"x":89,"y":349},"classname":"Category","namespace":"","increment":false,"timestamp":false,"softdelete":false,"column":[{"name":"id","type":"increments","length":"","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c111","order":0},{"name":"name","type":"string","length":"100","defaultvalue":"","enumvalue":"","ai":false,"pk":false,"nu":false,"ui":false,"in":false,"un":false,"fillable":false,"guarded":false,"visible":false,"hidden":false,"colid":"c70","order":1}],"relation":[],"seeding":[]}];
 
@@ -110,15 +123,45 @@ MightyBits.test = function() {
 }
 
 
-MightyBits.generatePlatform = function() {
+MightyBits.generatePlatformFromFile = function() {
   var param = {
     skema_path : '/Users/xcorex/Documents/Projects/Node/jsLaravelGenerator/skema/testing.skema',
     destination_dir : '/Users/xcorex/deploy2'
   }
 
-  MightyBits.ipc.sendParam('generate', param, function(){
-    console.log("generate done")
+  MightyBits.ipc.sendParam('generate', param, function(resp){
+    console.log(resp)
   });
 
 }
 
+MightyBits.generatePlatformFromJsonTo = function(destination_dir) {
+  var param = {
+    skema : DesignerApp.NodeEntities.ExportToJSON(),
+    destination_dir : destination_dir
+  }
+
+  MightyBits.ipc.sendParam('generate:json', param, function(resp){
+    console.log(resp)
+  });
+}
+
+MightyBits.generatePlatformTo = function() {
+
+  var filename = dialog.showSaveDialog({
+        title: "Save Platform to..",
+        defaultPath: "",
+  });
+
+  if(typeof(filename) !== 'undefined')
+  {
+    filename = filename + "_" + "platform"
+    // targz().extract(MightyBits.config.templatePath + path.sep + "platform.tar.gz", filename, function(err){
+    // });
+    fsextra.copy(MightyBits.config.templatePath + path.sep + "platform", filename, function (err) {
+          MightyBits.generatePlatformFromJsonTo(filename)
+          console.log("donex")
+    }) // copies file
+
+  }
+}

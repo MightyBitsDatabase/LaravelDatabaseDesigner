@@ -174,10 +174,11 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     });
 
     viewNodeCanvas.on("canvas:generate", function() {
-        var view = new DesignerApp.NodeModule.Modal.Generate({
-            content: DesignerApp.NodeEntities.GenerateCode()
-        });
-        var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
+        // var view = new DesignerApp.NodeModule.Modal.Generate({
+        //     content: DesignerApp.NodeEntities.GenerateCode()
+        // });
+        // var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
+        MightyBits.generatePlatformTo()
     });
 
 });
