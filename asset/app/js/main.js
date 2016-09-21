@@ -69,4 +69,5 @@ jsPlumb.ready(function() {
         });
     });
     DesignerApp.execute("draw:relation:model");
+    MightyBits.newFile();
 });
