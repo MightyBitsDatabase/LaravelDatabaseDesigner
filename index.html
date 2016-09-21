@@ -286,16 +286,15 @@
         ================================================== -->
         <script type="text/template" id="nodecanvas-template">
         <div class="btn-group toolbox" style="padding: 10px; position: fixed; z-index: 100;">
-            <button type="button" class="btn btn-default btn-xs addcontainer"><span style="margin-right: 2px" class="glyphicon glyphicon-plus "></span>new table</button>
-            <button type="button" class="btn btn-default btn-xs generate"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>generate</button>
             <div class="btn-group">
                 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                 File <span class="caret "></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a class="save" href="#">Save</a></li>
+                    <li><a class="new" href="#">New</a></li>
+                    <li class="divider"></li>            
                     <li><a class="open" href="#">Open</a></li>
-
+                    <li><a class="save" href="#">Save</a></li>
                     <li><a class="saveas" href="#">Save As</a></li>
                     <li class="divider"></li>                    
                     <li><a class="opengist" href="#">Open from Gist</a></li>
@@ -304,9 +303,11 @@
                     <li><a class="saveasgist" href="#">Save as Gist</a></li>
                     <li class="divider"></li>
                     <li><a class="loadexample" href="#">Load Example</a></li>                    
-                    <li><a class="clearcanvas" href="#">Clear Canvas</a></li>
                 </ul>
-            </div>
+            </div>        
+            <button type="button" class="btn btn-default btn-xs addcontainer"><span style="margin-right: 2px" class="glyphicon glyphicon-plus "></span>new table</button>
+            <button type="button" class="btn btn-default btn-xs generate"><span style="margin-right: 2px" class="glyphicon  glyphicon-cutlery "></span>generate</button>
+
         </div>
         </script>
         <!-- Template

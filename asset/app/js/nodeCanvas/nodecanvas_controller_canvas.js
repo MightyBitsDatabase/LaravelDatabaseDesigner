@@ -82,6 +82,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     });
 
+    viewNodeCanvas.on("canvas:new", function() {
+        MightyBits.newFile()
+    });
 
     viewNodeCanvas.on("canvas:open", function() {
         MightyBits.open()
@@ -155,11 +158,11 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     });
 
     viewNodeCanvas.on("canvas:save", function() {
-        MightyBits.save()
+        MightyBits.saveFile()
     });
 
     viewNodeCanvas.on("canvas:saveas", function() {
-        MightyBits.saveas()
+        MightyBits.saveAsFile()
     });
 
     viewNodeCanvas.on("canvas:loadexample", function() {

@@ -6,11 +6,11 @@ DesignerApp.module("NodeCanvas.Views", function(Views, DesignerApp, Backbone, Ma
         childView: DesignerApp.NodeModule.Views.NodeContainer,
         triggers: {
             "click .addcontainer": "canvas:createcontainer",
+            "click .new": "canvas:new",
             "click .open": "canvas:open",
             "click .save": "canvas:save",
             "click .saveas": "canvas:saveas",
             "click .generate": "canvas:generate",
-            "click .clearcanvas": "canvas:clearcanvas",
             "click .loadexample": "canvas:loadexample",
             "click .opengist": "canvas:opengist",
             "click .opengistid": "canvas:opengistid",
