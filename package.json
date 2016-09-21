@@ -27,8 +27,13 @@
   },
   "homepage": "https://github.com/BioDesignRealWorld/LaravelDatabaseDesigner",
   "devDependencies": {
-    "electron-prebuilt": "^1.0.1",
     "electron-prebuilt": "^1.1.0",
     "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "tar.gz": "^1.0.5",
+    "fs-extra": "^0.30.0",
+    "handlebars": "^4.0.0",
+    "lodash": "^3.1.0"    
   }
 }
