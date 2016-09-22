@@ -21,7 +21,7 @@ Laravel Database Designer depends on various open source projects:
 * [Backbonejs]
 * [Hellojs]
 * [Twitter Bootstrap] - great UI boilerplate for modern web apps
-* [Nodewebkit] - evented I/O for the backend (for gui app version)
+* [Electron]
 * [jQuery] 
 * [jsplumb]
 
@@ -42,7 +42,7 @@ License
 
 MIT
 
-
+[Electron]:http://electron.atom.io
 [badgeek]:https://github.com/badgeek
 [jsplumb]:http://jsplumb.org
 [Nodewebkit]:https://github.com/rogerwang/node-webkit
