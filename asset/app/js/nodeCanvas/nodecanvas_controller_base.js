@@ -85,8 +85,18 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
                 if (new_rel.get('relationtype') === 'belongsTo')
                 {
+
                     var foreign_key = targetModelName.toLowerCase() + "_id";
-                    containerModel.get("column").add({name: foreign_key, type: "integer", in: true});
+
+                    var res = containerModel.get("column").where({
+                        name: foreign_key
+                    })[0];
+
+                    if (typeof res === 'undefined') 
+                    {
+                            containerModel.get("column").add({name: foreign_key, type: "integer", in: true});
+                    }
+                
                 }else if (new_rel.get('relationtype') === 'belongsToMany'){
 
                     var canvas = DesignerApp.NodeEntities.getNodeCanvas();
