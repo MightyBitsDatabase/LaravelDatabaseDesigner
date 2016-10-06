@@ -2,11 +2,11 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
     // Private
     // -------------------------
 
-    Views.CreateConnection = function(srcNodeContainer, dstRelationModel) {
+    Views.CreateConnection = function(srcTableContainer, dstRelationModel) {
         //todo refactor this
         var conn = jsPlumb.connect({
-            source: srcNodeContainer.cid,
-            target: DesignerApp.NodeEntities.getNodeContainerFromClassName(dstRelationModel.get("relatedmodel")).cid,
+            source: srcTableContainer.cid,
+            target: DesignerApp.NodeEntities.getTableContainerFromClassName(dstRelationModel.get("relatedmodel")).cid,
             parameters: {
                 relation: dstRelationModel
             },
@@ -16,7 +16,7 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
                 }],
                 ["Label", {
                     cssClass: "label",
-                    label: srcNodeContainer.get('classname') + ' - ' + dstRelationModel.get('relationtype') + ' ' + dstRelationModel.get('relatedmodel'),
+                    label: srcTableContainer.get('classname') + ' - ' + dstRelationModel.get('relationtype') + ' ' + dstRelationModel.get('relatedmodel'),
                     location: 0.3,
                     id: "label"
                 }]
@@ -24,7 +24,7 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
         });
         //todo refactor this
         conn.bind("click", function() {
-            DesignerApp.execute("nodecanvas:edit:relation", srcNodeContainer, dstRelationModel);
+            DesignerApp.execute("nodecanvas:edit:relation", srcTableContainer, dstRelationModel);
         });
 
         return conn;
@@ -65,7 +65,7 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
 
     */
     //ColumnCollectionView + NodeView
-    Views.NodeContainer = Backbone.Marionette.CompositeView.extend({
+    Views.TableContainer = Backbone.Marionette.CompositeView.extend({
         template: "#nodecontainer-template",
         className: "node-view item",
         childView: Views.NodeItem,

@@ -57,9 +57,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     viewNodeCanvas.on("canvas:createcontainer", function() {
 
-        var container = DesignerApp.NodeEntities.getNewNodeContainer();
+        var container = DesignerApp.NodeEntities.getNewTableContainer();
         //console.log(container);
-        var view = new DesignerApp.NodeModule.Modal.CreateNodeContainer({
+        var view = new DesignerApp.NodeModule.Modal.CreateTableContainer({
             model: container
         });
 

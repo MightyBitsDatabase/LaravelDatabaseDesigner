@@ -24,7 +24,7 @@ DesignerApp.module("NodeModule", function(NodeModule, DesignerApp, Backbone, Mar
 
     DesignerApp.vent.on("noderelation:add", function(param) {
         var conn = DesignerApp.NodeModule.Views.CreateConnection(
-            param.srcNodeContainer,
+            param.srcTableContainer,
             param.dstRelation
         );
         param.dstRelation.set("conn", conn);
@@ -36,7 +36,7 @@ DesignerApp.module("NodeModule", function(NodeModule, DesignerApp, Backbone, Mar
         jsPlumb.detach(conn);
 
         conn = DesignerApp.NodeModule.Views.CreateConnection(
-            param.srcNodeContainer,
+            param.srcTableContainer,
             param.dstRelation
         );
 
@@ -45,13 +45,13 @@ DesignerApp.module("NodeModule", function(NodeModule, DesignerApp, Backbone, Mar
 
     DesignerApp.vent.on("noderelation:rename", function(param) {
         //rename label
-        var srcNodeContainer = param.srcNodeContainer;
+        var srcTableContainer = param.srcTableContainer;
         var dstRelationModel = param.dstRelation;
 
         var conn = param.dstRelation.get("conn");
         var label = conn.getOverlay("label");
 
-        label.setLabel(srcNodeContainer.get('classname') + ' ' + dstRelationModel.get('relationtype') + ' ' + dstRelationModel.get('relatedmodel'));
+        label.setLabel(srcTableContainer.get('classname') + ' ' + dstRelationModel.get('relationtype') + ' ' + dstRelationModel.get('relatedmodel'));
     });
 
     DesignerApp.vent.on("noderelation:destroy", function(param) {
@@ -67,7 +67,7 @@ DesignerApp.module("NodeModule", function(NodeModule, DesignerApp, Backbone, Mar
 
     DesignerApp.vent.on("noderelation:redraw", function(param) {
         var conn = param.dstRelation.get("conn");
-        $(conn.getOverlay('label').canvas).html(param.srcNodeContainer.get('name') + ' ' + param.dstRelation.get('relationtype') + ' ' + param.dstRelation.get('relatedmodel'));
+        $(conn.getOverlay('label').canvas).html(param.srcTableContainer.get('name') + ' ' + param.dstRelation.get('relationtype') + ' ' + param.dstRelation.get('relatedmodel'));
     });
 
 

@@ -62,8 +62,8 @@ jsPlumb.ready(function() {
                 DesignerApp.execute("nodecanvas:create:relation", node, connection.targetId);
             }
 
-            //console.log(getNodeContainerFromNodeCid(connection.sourceId));
-            //console.log(getNodeContainerFromNodeCid(connection.targetId));
+            //console.log(getTableContainerFromNodeCid(connection.sourceId));
+            //console.log(getTableContainerFromNodeCid(connection.targetId));
 
             return false;
         });

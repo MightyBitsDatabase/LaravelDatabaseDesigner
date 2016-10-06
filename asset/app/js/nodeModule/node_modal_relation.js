@@ -18,7 +18,7 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
         },
         consoleLog: function(e)
         {
-            var model = (DesignerApp.NodeEntities.getNodeContainerFromClassName(e.target.value));
+            var model = (DesignerApp.NodeEntities.getTableContainerFromClassName(e.target.value));
             var column = (model.get('column').toJSON());
 
             var options = (this.optionTemplate({relatedcolumn: column}));
@@ -53,10 +53,10 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
                 this.$('.classoption').hide(); //hide option box
                 this.$('#relation-relatedmodel').find('option[value=' + this.targetClass + ']').attr('selected', 'selected'); //make destination selected by default
             
-                model = (DesignerApp.NodeEntities.getNodeContainerFromClassName(this.targetClass));
+                model = (DesignerApp.NodeEntities.getTableContainerFromClassName(this.targetClass));
             }else{
                 this.$('#relation-relatedmodel').find('option[value=' + this.model.get('classname') + ']').remove(); //remove self (model) from option list
-                model = (DesignerApp.NodeEntities.getNodeContainerFromClassName(this.$('#relation-relatedmodel').val()));
+                model = (DesignerApp.NodeEntities.getTableContainerFromClassName(this.$('#relation-relatedmodel').val()));
             }
 
             
@@ -87,7 +87,7 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
         },
         consoleLog: function(e)
         {
-            var model = (DesignerApp.NodeEntities.getNodeContainerFromClassName(e.target.value));
+            var model = (DesignerApp.NodeEntities.getTableContainerFromClassName(e.target.value));
             var column = (model.get('column').toJSON());
 
             var options = (this.optionTemplate({relatedcolumn: column}));
@@ -110,14 +110,14 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
                 relationship: this.model.toJSON(),
                 //todo: change to reqreq
                 relatedmodel: DesignerApp.NodeEntities.getNodeCanvas().toJSON(),
-                relatedcolumn: DesignerApp.NodeEntities.getNodeContainerFromClassName(this.model.get('relatedmodel')).get('column').toJSON()
+                relatedcolumn: DesignerApp.NodeEntities.getTableContainerFromClassName(this.model.get('relatedmodel')).get('column').toJSON()
             };
 
             //console.log(this.model.get('relatedcolumn'));
 
             this.$el.html(this.template(templatevar));
 
-            var model = (DesignerApp.NodeEntities.getNodeContainerFromClassName(this.model.get('relatedmodel')));
+            var model = (DesignerApp.NodeEntities.getTableContainerFromClassName(this.model.get('relatedmodel')));
             var column = (model.get('column').toJSON());
 
             var options = (this.optionTemplate({relatedcolumn: column}));

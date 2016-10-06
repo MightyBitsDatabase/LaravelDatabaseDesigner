@@ -5,7 +5,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
     viewNodeCanvas.on("childview:container:editcontainer", function(childview) {
         var containerModel = childview.model;
-        var view = new DesignerApp.NodeModule.Modal.EditNodeContainer({
+        var view = new DesignerApp.NodeModule.Modal.EditTableContainer({
             model: containerModel
         });
         var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
@@ -53,7 +53,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                 //console.log(new_rel);
 
                 //foreign key
-                var dest_node = (DesignerApp.NodeEntities.getNodeContainerFromClassName(data.relatedmodel)).get('column');
+                var dest_node = (DesignerApp.NodeEntities.getTableContainerFromClassName(data.relatedmodel)).get('column');
                 var foreign_key = (childview.model.get('name').toLowerCase()) + "_id";
                 var res = dest_node.where({
                     name: foreign_key

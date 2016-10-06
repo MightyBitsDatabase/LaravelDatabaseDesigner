@@ -3,7 +3,7 @@ DesignerApp.module("NodeCanvas.Views", function(Views, DesignerApp, Backbone, Ma
     Views.NodeCanvas = Backbone.Marionette.CompositeView.extend({
         id: "container",
         template: "#nodecanvas-template",
-        childView: DesignerApp.NodeModule.Views.NodeContainer,
+        childView: DesignerApp.NodeModule.Views.TableContainer,
         triggers: {
             "click .addcontainer": "canvas:createcontainer",
             "click .new": "canvas:new",

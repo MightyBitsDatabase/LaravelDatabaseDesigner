@@ -44,10 +44,10 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     //todo: refactor this
     DesignerApp.commands.setHandler("nodecanvas:create:relation", function(containerModel, targetId) {
 
-        var targetName = DesignerApp.NodeEntities.getNodeContainerFromNodeCid(targetId).get("name");
-        var targetClass = DesignerApp.NodeEntities.getNodeContainerFromNodeCid(targetId).get("classname");
+        var targetName = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("name");
+        var targetClass = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("classname");
         
-        console.log(DesignerApp.NodeEntities.getNodeContainerFromNodeCid(targetId));
+        console.log(DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId));
 
         var view = new DesignerApp.NodeModule.Modal.CreateRelation({
             model: containerModel,
@@ -72,7 +72,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
 
                 //foreign key
-                var dest_node = (DesignerApp.NodeEntities.getNodeContainerFromClassName(data.relatedmodel)).get('column');
+                var dest_node = (DesignerApp.NodeEntities.getTableContainerFromClassName(data.relatedmodel)).get('column');
                 var foreign_key = (containerModel.get('name').toLowerCase()) + "_id";
                 var res = dest_node.where({
                     name: foreign_key

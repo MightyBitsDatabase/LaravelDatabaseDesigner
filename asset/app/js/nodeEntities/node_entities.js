@@ -7,7 +7,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
     // -------------------------
     //
     //    1.NodeCanvas (col)
-    //        *NodeContainer (model) -> composite view
+    //        *TableContainer (model) -> composite view
     //          1.NodeCollection (col) -> NodeModel
     //          2.RelationCollection (col) -> RelationModel
     //          .....
@@ -104,7 +104,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
     //  RelationCollection*
     //
 
-    var NodeContainer = Backbone.Model.extend({
+    var TableContainer = Backbone.Model.extend({
         defaults: {
             name: "",
             classname: "",
@@ -184,7 +184,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
     });
 
     var NodeCanvas = Backbone.Collection.extend({
-        model: NodeContainer
+        model: TableContainer
     });
 
 
@@ -215,8 +215,8 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
     NodeEntities.CurrentNodeCanvas = nodeCanvas;
 
-    NodeEntities.getNewNodeContainer = function() {
-        return new NodeContainer();
+    NodeEntities.getNewTableContainer = function() {
+        return new TableContainer();
     };
 
     NodeEntities.getNewNodeModel = function() {
@@ -232,17 +232,17 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         return nodeCanvas;
     };
 
-    NodeEntities.getNodeContainerFromNodeCid = function(modelcid) {
+    NodeEntities.getTableContainerFromNodeCid = function(modelcid) {
         return nodeCanvas.get(modelcid);
     };
 
-    NodeEntities.getNodeContainerFromClassName = function(modelname) {
+    NodeEntities.getTableContainerFromClassName = function(modelname) {
         return nodeCanvas.where({
             classname: modelname
         })[0];
     };
 
-    NodeEntities.getNodeContainerFromName = function(modelname) {
+    NodeEntities.getTableContainerFromName = function(modelname) {
         return nodeCanvas.where({
             name: modelname
         })[0];
@@ -250,7 +250,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
 
     NodeEntities.AddNewNode = function(param) {
-        var nodeContainer = new NodeContainer(param);
+        var nodeContainer = new TableContainer(param);
         var col = nodeContainer.get("column"); //NodeCollection
         var rel = nodeContainer.get("relation"); //RelationCollection
 
@@ -313,13 +313,13 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
     NodeEntities.AddRelation = function(node, relation) {
         //console.log(relation);
-        var sourceNodeContainer = node;
-        var targetNodeContainer = NodeEntities.getNodeContainerFromClassName(relation.get("relatedmodel"));
+        var sourceTableContainer = node;
+        var targetTableContainer = NodeEntities.getTableContainerFromClassName(relation.get("relatedmodel"));
         var destinationRelationModel = relation;
 
         var raiseVent = function(evName) {
             DesignerApp.vent.trigger("noderelation:" + evName, {
-                srcNodeContainer: sourceNodeContainer,
+                srcTableContainer: sourceTableContainer,
                 dstRelation: destinationRelationModel
             });
             //console.log(evName);
@@ -331,7 +331,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
             //console.log(relationModel);
 
-            var targetModel = NodeEntities.getNodeContainerFromName(relation.get("name"));
+            var targetModel = NodeEntities.getTableContainerFromName(relation.get("name"));
             relation.listenTo(targetModel, "destroy", function() {
                 raiseVent("destroyme");
                 relation.destroy();
@@ -345,13 +345,13 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         });
 
         //on target table destroy, destroy our relation
-        relation.listenTo(targetNodeContainer, "destroy", function() {
+        relation.listenTo(targetTableContainer, "destroy", function() {
             raiseVent("destroy");
             relation.destroy();
         });
 
         //on target table relation rename, change our reference and update overlay
-        relation.listenTo(targetNodeContainer, "change:classname", function(targetNode) {
+        relation.listenTo(targetTableContainer, "change:classname", function(targetNode) {
             relation.set("relatedmodel", targetNode.get("classname"), {
                 silent: true
             });
@@ -359,13 +359,13 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         });
 
         //on our table rename update overlay
-        relation.listenTo(sourceNodeContainer, "change:name", function(targetNode) {
+        relation.listenTo(sourceTableContainer, "change:name", function(targetNode) {
             raiseVent("rename");
         });
 
 
         //on our table rename update overlay
-        relation.listenTo(sourceNodeContainer, "change:classname", function(targetNode) {
+        relation.listenTo(sourceTableContainer, "change:classname", function(targetNode) {
             raiseVent("rename");
         });
 
