@@ -15,6 +15,9 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
         },
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
+            this.$("#container-increment").prop("checked", true);
+            this.$("#container-timestamp").prop("checked", true);
+            
             return this.el;
         }
     });
