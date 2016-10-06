@@ -112,7 +112,8 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
             color: "",
             increment: "",
             timestamp: "",
-            softdelete: ""
+            softdelete: "",
+            pivot: ""
         },
         getSeeding: function() {
 
@@ -399,6 +400,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
                 increment: nodeContainer.get('increment'),
                 timestamp: nodeContainer.get('timestamp'),
                 softdelete: nodeContainer.get('softdelete'),
+                pivot: nodeContainer.get('pivot'),
                 column: [],
                 relation: [],
                 seeding: [],

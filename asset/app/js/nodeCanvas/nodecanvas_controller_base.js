@@ -99,6 +99,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                 
                 }else if (new_rel.get('relationtype') === 'belongsToMany'){
 
+                    //create pivot table
                     var canvas = DesignerApp.NodeEntities.getNodeCanvas();
                     var pivot_sort = [
                         targetModelName.toLowerCase(),
@@ -111,6 +112,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
                     if(typeof container === 'undefined')
                     {
+
                         var pivot_table =  {
                             "name": pivot_name,
                             "classname": pivot_name,
@@ -122,28 +124,22 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                             "color":"Grey",
                             "increment":false,
                             "timestamp":false,
-                            "softdelete":false
+                            "softdelete":false,
+                            "pivot" : true
                         }
 
                         var nodeTable = DesignerApp.NodeEntities.AddNewNode(pivot_table);
                         
-                        var pivot_item_1 = {  
+                        nodeTable.get('column').add({  
                                        "name":pivot_sort[0] + "_id",
                                        "type":"timestamp",
-                                   }
+                                   });
 
-                        nodeTable.get('column').add(pivot_item_1);
-
-                        var pivot_item_2 = {  
+                        nodeTable.get('column').add({  
                                        "name":pivot_sort[1] + "_id",
                                        "type":"timestamp",
-                                   }
-
-                        nodeTable.get('column').add(pivot_item_2);
-
-
+                                   });
                     }
-
                 }else{
                     var foreign_key = (containerModel.get('name').toLowerCase()) + "_id";                    
                     var res = dest_node_column.where({

@@ -317,6 +317,13 @@
         </script>
         <!-- Template
         ================================================== -->
+        <script type="text/template" id="nodeitem-pivot-template">
+        <b><%=name%></b> <i><%=type%></i> (<%=length%>)
+
+   
+        </script>        
+        <!-- Template
+        ================================================== -->
         <script type="text/template" id="nodecontainer-template">
         <div>
         <p> <b><%=name%>:<%=classname%></b>
@@ -332,6 +339,19 @@
                 <div id="conn-<%=name%>" style="" tag="<%=name%>" class="conn"></div>
         </div>
         </script>
+        <!-- Template
+        ================================================== -->
+        <script type="text/template" id="nodecontainer-pivot-template">
+        <div>
+        <p> pivot <b><%=name%>:<%=classname%></b>
+        <a href="#" style="display: none;" class="btn relationadd btn-xs btn-container"><span class="glyphicon glyphicon-plus"></span> r</a>
+        <a href="#" class="btn seeding btn-xs btn-container"><span class="glyphicon glyphicon-eye-open"></span> s</a>        
+        <a href="#" class="btn delete btn-xs btn-container"><span class="glyphicon glyphicon-remove-circle"></span> </a>
+        
+        <ul class="nodecollection-container">
+        </ul>       
+        </div>
+        </script>        
         <!-- Template
         ================================================== -->
         <script type="text/template" id="createnode-template">

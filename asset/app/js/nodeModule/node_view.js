@@ -46,6 +46,21 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
         initialize: function() {}
     });
 
+
+    Views.NodeItemPivot = Backbone.Marionette.ItemView.extend({
+        tagName: "li",
+        className: 'node-column',
+        template: "#nodeitem-pivot-template",
+        triggers: {
+            'click .edit': 'nodeitem:edit',
+            'click .delete': 'nodeitem:delete'
+        },
+        modelEvents: {
+            "change": "render"
+        },
+        initialize: function() {}
+    });
+
     /*
 
         this.model.get('relation').each(function(item) {
@@ -84,7 +99,7 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
         },
         modelChanged: function(m) {
             this.$el.removeClass("node-" + m._previousAttributes.color);            
-            this.$el.addClass("node-" + this.model.get("color"));            
+            this.$el.addClass("node-" + this.model.get("color"));      
             this.render();
         },
         triggers: {
@@ -99,7 +114,14 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
         initialize: function() {
             this.collection = this.model.get("column");
             this.$el.attr("id", this.model.cid);
-            this.$el.addClass("node-" + this.model.get("color"));            
+            this.$el.addClass("node-" + this.model.get("color"));  
+
+            if(this.model.get("pivot") === true) {
+                this.$el.addClass("node-pivot"); 
+                this.template = "#nodecontainer-pivot-template";
+                this.childView = Views.NodeItemPivot;
+            }
+
            // console.log("wew");
         },
         onAddChild: function(child) {
