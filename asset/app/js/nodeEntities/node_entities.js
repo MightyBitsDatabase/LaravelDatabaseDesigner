@@ -291,7 +291,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         //    nodeContainer.get("seeding").add(seed);             
         //});
 
-
+        return nodeContainer;
 
     };
 
