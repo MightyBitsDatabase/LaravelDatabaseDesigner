@@ -44,12 +44,14 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     //todo: refactor this
     DesignerApp.commands.setHandler("nodecanvas:create:relation", function(containerModel, targetId) {
 
-        var targetName = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("name");
+        var targetModelName = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("name");
+        var sourceModelName = containerModel.get('name');
+
         var targetClass = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("classname");
         
         var view = new DesignerApp.NodeModule.Modal.CreateRelation({
             model: containerModel,
-            target: targetName,
+            target: targetModelName,
             targetClass: targetClass
         });
 
@@ -60,7 +62,6 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             if (new_rel.set(data, {
                 validate: true
             })) {
-
 
                 /*
                     new_rel
@@ -74,9 +75,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     usenamespace:""
                 */
 
-
-                console.log('wew', new_rel);
-                new_rel.set('name', targetName);
+                new_rel.set('name', targetModelName);
                 var relation = containerModel.get("relation");
                 relation.add(new_rel);
                 DesignerApp.NodeEntities.AddRelation(containerModel, new_rel);
@@ -86,8 +85,55 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
                 if (new_rel.get('relationtype') === 'belongsTo')
                 {
-                    var foreign_key = targetName.toLowerCase() + "_id";
+                    var foreign_key = targetModelName.toLowerCase() + "_id";
                     containerModel.get("column").add({name: foreign_key, type: "integer", in: true});
+                }else if (new_rel.get('relationtype') === 'belongsToMany'){
+
+                    var canvas = DesignerApp.NodeEntities.getNodeCanvas();
+                    var pivot_sort = [
+                        targetModelName.toLowerCase(),
+                        sourceModelName.toLowerCase()
+                    ].sort();
+
+                    var pivot_name  = pivot_sort[0] + "_" + pivot_sort[1];
+                    
+                    var container = DesignerApp.NodeEntities.getTableContainerFromClassName(pivot_name);
+
+                    if(typeof container === 'undefined')
+                    {
+                        var pivot_table =  {
+                            "name": pivot_name,
+                            "classname": pivot_name,
+                            "namespace":"",
+                            "position": {
+                                            "x":200,
+                                            "y":200
+                                        },
+                            "color":"Grey",
+                            "increment":false,
+                            "timestamp":false,
+                            "softdelete":false
+                        }
+
+                        var nodeTable = DesignerApp.NodeEntities.AddNewNode(pivot_table);
+                        
+                        var pivot_item_1 = {  
+                                       "name":pivot_sort[0] + "_id",
+                                       "type":"timestamp",
+                                   }
+
+                        nodeTable.get('column').add(pivot_item_1);
+
+                        var pivot_item_2 = {  
+                                       "name":pivot_sort[1] + "_id",
+                                       "type":"timestamp",
+                                   }
+
+                        nodeTable.get('column').add(pivot_item_2);
+
+
+                    }
+
                 }else{
                     var foreign_key = (containerModel.get('name').toLowerCase()) + "_id";                    
                     var res = dest_node_column.where({
