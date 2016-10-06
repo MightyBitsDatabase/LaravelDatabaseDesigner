@@ -47,8 +47,6 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var targetName = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("name");
         var targetClass = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("classname");
         
-        console.log(DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId));
-
         var view = new DesignerApp.NodeModule.Modal.CreateRelation({
             model: containerModel,
             target: targetName,
@@ -64,21 +62,43 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             })) {
 
 
+                /*
+                    new_rel
+                    -------
+                    extramethods:""
+                    foreignkeys:""
+                    name:"Posts"
+                    relatedcolumn:"id"
+                    relatedmodel:"Post"
+                    relationtype:"hasOne"
+                    usenamespace:""
+                */
 
+
+                console.log('wew', new_rel);
                 new_rel.set('name', targetName);
                 var relation = containerModel.get("relation");
                 relation.add(new_rel);
                 DesignerApp.NodeEntities.AddRelation(containerModel, new_rel);
 
+                //destination table column
+                var dest_node_column = (DesignerApp.NodeEntities.getTableContainerFromClassName(data.relatedmodel)).get('column');
 
-                //foreign key
-                var dest_node = (DesignerApp.NodeEntities.getTableContainerFromClassName(data.relatedmodel)).get('column');
-                var foreign_key = (containerModel.get('name').toLowerCase()) + "_id";
-                var res = dest_node.where({
-                    name: foreign_key
-                })[0];
-                if (!res) dest_node.add({name: foreign_key, type: "integer", in: true});                
-                //foreign key
+                if (new_rel.get('relationtype') === 'belongsTo')
+                {
+                    var foreign_key = targetName.toLowerCase() + "_id";
+                    containerModel.get("column").add({name: foreign_key, type: "integer", in: true});
+                }else{
+                    var foreign_key = (containerModel.get('name').toLowerCase()) + "_id";                    
+                    var res = dest_node_column.where({
+                        name: foreign_key
+                    })[0];
+                    //if already have modelname_id dont add item                    
+                    if (!res) dest_node_column.add({name: foreign_key, type: "integer", in: true});                
+                    //foreign key
+                }
+
+
 
 
                 
