@@ -66,6 +66,9 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
 
         view.on("okClicked", function(data) {
+
+            if (data.classname === '') data.classname = data.name
+
             if (container.set(data, {
                 validate: true
             })) {
@@ -73,6 +76,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
                     x: 100,
                     y: 100
                 };
+                console.log(data);
                 DesignerApp.NodeEntities.AddNewNode(data);
             } else {
                 view.trigger("formDataInvalid", container.validationError);
