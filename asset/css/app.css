@@ -162,7 +162,10 @@ border-style: dashed;
 }
 
 .headerSeedRow{
-
     background-color: #fff;
+}
 
+
+.modal-content {
+    border-radius: 0px;
 }
