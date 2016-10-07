@@ -72,7 +72,13 @@
                     <label class="control-label" for="type">Type</label>
                     <div class="">
                         <select id="type" name="type" class="form-control">
-                            <optgroup label="LARAVEL TYPES">
+                            <optgroup label="Common Types">
+                                <option value="string">String (single line)</option>
+                                <option value="text">Text (multiple line)</option>
+                                <option value="integer">Number</option>
+                                <option value="float">Number with decimal</option>
+                            </optgroup>
+                            <optgroup label="Laravel">
                                 <option value="increments">Increments</option>
                                 <option value="bigIncrements">Big increments</option>
                                 <option value="timestamps">Timestamps</option>
