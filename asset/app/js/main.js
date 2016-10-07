@@ -58,8 +58,8 @@ jsPlumb.ready(function() {
         instance.bind("beforeDrop", function(connection) {
             console.log(connection);
             if (connection.sourceId !== connection.targetId) {
-                var node = connection.connection.getParameter("node");
-                DesignerApp.execute("nodecanvas:create:relation", node, connection.targetId);
+                var containerModel = connection.connection.getParameter("node");
+                DesignerApp.execute("nodecanvas:create:relation", containerModel, connection.targetId);
             }
 
             //console.log(getTableContainerFromNodeCid(connection.sourceId));
