@@ -8,7 +8,7 @@ jsPlumb.ready(function() {
     }];
     jsPlumb.Defaults.HoverPaintStyle = {
         strokeStyle: "#637b94",
-        lineWidth: 6
+        lineWidth: 4
     };
     jsPlumb.Defaults.EndpointHoverStyle = {
         fillStyle: "#637b94"
