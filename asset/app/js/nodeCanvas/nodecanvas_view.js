@@ -4,7 +4,21 @@ DesignerApp.module("NodeCanvas.Views", function(Views, DesignerApp, Backbone, Ma
         id: "container",
         template: "#nodecanvas-template",
         childView: DesignerApp.NodeModule.Views.TableContainer,
+        buildChildView: function(tableContainer, ChildViewClass, childViewOptions){
+              var options = _.extend({model: tableContainer}, childViewOptions);
+              var view;
+              // create the child view instance
+              if (tableContainer.get('type') === 'maps')
+              {
+                  view = new DesignerApp.NodeModule.Views.TableMap(options);
+              }else{
+                  view = new this.childView(options);
+              }
+
+              return view;
+        },
         triggers: {
+            "click .addmap": "canvas:addmap",            
             "click .addcontainer": "canvas:createcontainer",
             "click .new": "canvas:new",
             "click .open": "canvas:open",

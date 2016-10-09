@@ -155,13 +155,18 @@ MightyBits.generatePlatformTo = function() {
 
   if(typeof(filename) !== 'undefined')
   {
-    filename = filename + "_" + "platform"
+    filename = filename
     // targz().extract(MightyBits.config.templatePath + path.sep + "platform.tar.gz", filename, function(err){
     // });
-    fsextra.copy(MightyBits.config.templatePath + path.sep + "platform", filename, function (err) {
-          MightyBits.generatePlatformFromJsonTo(filename)
-          console.log("donex")
-    }) // copies file
+    var plat_path = MightyBits.config.templatePath + path.sep + "platform";
+    var plat_path_dev = "/Users/xcorex/Documents/Projects/Php/adminlte-generator";
+
+    MightyBits.generatePlatformFromJsonTo(filename);
+
+    // fsextra.copy(plat_path_dev, filename, function (err) {
+    //       MightyBits.generatePlatformFromJsonTo(filename)
+    //       console.log("donex")
+    // }) // copies file
 
   }
 }

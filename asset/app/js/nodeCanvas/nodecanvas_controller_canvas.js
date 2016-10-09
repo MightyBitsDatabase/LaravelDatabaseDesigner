@@ -53,7 +53,24 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
         });
     };
 
+    viewNodeCanvas.on("canvas:addmap", function() {
 
+      var data =  {
+            classname:'asdsad',
+            color:'White',
+            increment:true,
+            name:'asdsad',
+            namespace:"",
+            position: {x:300, y:300},
+            softdelete:false,
+            timestamp:true,    
+            type:'maps'
+        }
+
+        var nodeCanvas = DesignerApp.NodeEntities.getNodeCanvas();
+        nodeCanvas.add(data);
+
+    });
 
     viewNodeCanvas.on("canvas:createcontainer", function() {
 

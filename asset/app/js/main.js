@@ -56,10 +56,21 @@ jsPlumb.ready(function() {
         });
 
         instance.bind("beforeDrop", function(connection) {
-            console.log(connection);
             if (connection.sourceId !== connection.targetId) {
                 var containerModel = connection.connection.getParameter("node");
-                DesignerApp.execute("nodecanvas:create:relation", containerModel, connection.targetId);
+
+                var targetNodeContainer = DesignerApp.NodeEntities.getTableContainerFromNodeCid(connection.targetId);
+                console.log(targetNodeContainer.get('type'))
+                if(typeof containerModel !== 'undefined' && targetNodeContainer.get('type') === '')
+                {
+                    DesignerApp.execute("nodecanvas:create:relation", containerModel, connection.targetId);
+                }else{
+                    DesignerApp.execute("nodecanvas:create:relation" + targetNodeContainer.get('type'), containerModel, connection.targetId);
+                }
+
+
+
+
             }
 
             //console.log(getTableContainerFromNodeCid(connection.sourceId));
