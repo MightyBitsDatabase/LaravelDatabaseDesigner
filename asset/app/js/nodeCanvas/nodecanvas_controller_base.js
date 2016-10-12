@@ -42,7 +42,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     });
 
     //todo: refactor this
-    DesignerApp.commands.setHandler("nodecanvas:create:relation", function(containerModel, targetId) {
+    DesignerApp.commands.setHandler("nodecanvas:create:relation:table", function(containerModel, targetId) {
 
         var targetModelName = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId).get("name");
         var sourceModelName = containerModel.get('name');

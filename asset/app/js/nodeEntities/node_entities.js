@@ -13,18 +13,17 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
     //          .....
     //
 
-  var NodeMapPresentation = Backbone.Model.extend({
+  var NodePresentation = Backbone.Model.extend({
         defaults: {
             name: '',
-            latitude: '',
-            longitude: '',
-            sourcetable: ''
+            type: '',
+            model: ''
         },
     });
 
 
-    var NodeMapPresentationCollection = Backbone.Collection.extend({
-        model: NodeMapPresentation,
+    var NodePresentationCollection = Backbone.Collection.extend({
+        model: NodePresentation,
         comparator: "order"
     });
 
@@ -247,6 +246,10 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
     };
 
 
+    NodeEntities.getNewNodePresentationModel = function() {
+        return new NodePresentation();
+    };
+
     NodeEntities.getNodeCanvas = function() {
         return nodeCanvas;
     };
@@ -275,37 +278,40 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         model.get('column').add(column);
     };
 
+    //use to add new node
     NodeEntities.AddNewNode = function(param) {
         var nodeContainer = new TableContainer(param);
 
-        var col = nodeContainer.get("column"); //NodeCollection
-        var rel = nodeContainer.get("relation"); //RelationCollection
-        var pre = nodeContainer.get("presentation"); //RelationCollection
 
-        nodeContainer.set("column", new NodeCollection(col));
-        nodeContainer.set("relation", new RelationCollection(rel));
-        nodeContainer.set("seeding", new NodeEntities.Seeding());
-        nodeContainer.set("presentation", new NodeMapPresentationCollection(pre));
-        nodeContainer.set("seeding", nodeContainer.getSeeding());
+            var col = nodeContainer.get("column"); //NodeCollection
+            var rel = nodeContainer.get("relation"); //RelationCollection
 
-        nodeCanvas.add(nodeContainer);
-        //console.log(param);
+            nodeContainer.set("column", new NodeCollection(col));
+            nodeContainer.set("relation", new RelationCollection(rel));
+            nodeContainer.set("seeding", new NodeEntities.Seeding());
+            nodeContainer.set("seeding", nodeContainer.getSeeding());
+            
+            var pre = nodeContainer.get("presentation"); //RelationCollection
+            nodeContainer.set("presentation", new NodePresentationCollection(pre)); 
 
-        _.each(param.seeding, function(seedItem) {
-            var seed = new NodeEntities.SeedTableCollection();
-            nodeContainer.get("column").each(function(columnItem) {
-                _.each(seedItem, function(seedEntity) {
-                    if (seedEntity.colid === columnItem.get("colid")) {
-                        seed.get("column").add({
-                            colid: seedEntity.colid,
-                            content: seedEntity.content
-                        });
-                    }
+            nodeCanvas.add(nodeContainer);
 
+            _.each(param.seeding, function(seedItem) {
+                var seed = new NodeEntities.SeedTableCollection();
+                nodeContainer.get("column").each(function(columnItem) {
+                    _.each(seedItem, function(seedEntity) {
+                        if (seedEntity.colid === columnItem.get("colid")) {
+                            seed.get("column").add({
+                                colid: seedEntity.colid,
+                                content: seedEntity.content
+                            });
+                        }
+
+                    });
                 });
+                nodeContainer.get("seeding").add(seed);
             });
-            nodeContainer.get("seeding").add(seed);
-        });
+        
 
         return nodeContainer;
 
@@ -313,10 +319,25 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
     NodeEntities.AddNewRelation = function(nodeCanvasParam) {
         nodeCanvas.each(function(node) {
-            var relations = node.get("relation");
-            relations.each(function(relation) {
-                NodeEntities.AddRelation(node, relation);
-            });
+
+                var relations = node.get("relation");
+
+                // if (typeof relations !== 'undefined')
+                // {
+                    relations.each(function(relation) {
+                        NodeEntities.AddRelation(node, relation);
+                    }); 
+                // }
+
+                var presentation = node.get("presentation");
+
+                // if (typeof presentation !== 'undefined')
+                // {
+                    presentation.each(function(presentation) {
+                        NodeEntities.AddPresentationRelation(node, presentation);
+                    }); 
+                // }
+
         });
     };
 
@@ -406,25 +427,39 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
         varNodeCanvas.each(function(nodeContainer) {
 
             var nodeTable = nodeContainer.toJSON();
+            console.log(nodeTable);
+            if (nodeTable.type === 'maps')
+            {
+                nodeTable['column'] = [];
+                nodeTable['relation'] = [];
+                nodeTable['seeding'] = [];
+                nodeTable['presentation']  = [];
+            }else{
+                nodeTable['presentation'] = nodeContainer.get('presentation').toJSON();                
+                nodeTable['column'] = nodeContainer.get('column').toJSON();
+                nodeTable['relation'] = [];
+                nodeContainer.get('relation').each(function(relationItem) {
+                    var rel = relationItem.toJSON();                
+                    //delete jsplumb conn
+                    delete rel.conn;
+                    nodeTable.relation.push(rel);
+                });
 
-            nodeTable['column'] = nodeContainer.get('column').toJSON();
+                nodeTable['presentation']  = [];
+                nodeContainer.get('presentation').each(function(relationItem) {
+                    var rel = relationItem.toJSON();                
+                    //delete jsplumb conn
+                    delete rel.conn;
+                    nodeTable.presentation.push(rel);
+                });
 
-            nodeTable['presentation'] = nodeContainer.get('presentation').toJSON();
 
-            nodeTable['relation'] = [];
-            nodeContainer.get('relation').each(function(relationItem) {
-                var rel = relationItem.toJSON();                
-                //delete jsplumb conn
-                delete rel.conn;
-                nodeTable.relation.push(rel);
-            });
-
-            nodeTable['seeding'] = [];
-            var seeding = nodeContainer.getSeeding();
-            seeding.each(function(seedItem) {
-                nodeTable.seeding.push(seedItem.get("column").toJSON());
-            });
-
+                nodeTable['seeding'] = [];
+                var seeding = nodeContainer.getSeeding();
+                seeding.each(function(seedItem) {
+                    nodeTable.seeding.push(seedItem.get("column").toJSON());
+                });
+            }
             nodes.push(nodeTable);
         });
 

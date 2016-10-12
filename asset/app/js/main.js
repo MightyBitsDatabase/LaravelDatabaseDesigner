@@ -40,7 +40,10 @@ jsPlumb.ready(function() {
         instance.bind("connectionDetached", function(info, originalEvent) {
             //todo: refactor
             //console.log(info.connection.getParameter("relation"))
+
+            //relation = jsplumb connect param which is model
             var relation = info.connection.getParameter("relation");
+
             //console.log(relation);
 
             if (relation) {
@@ -61,15 +64,14 @@ jsPlumb.ready(function() {
 
                 var targetNodeContainer = DesignerApp.NodeEntities.getTableContainerFromNodeCid(connection.targetId);
                 console.log(targetNodeContainer.get('type'))
+
+                //to support old version
                 if(typeof containerModel !== 'undefined' && targetNodeContainer.get('type') === '')
                 {
-                    DesignerApp.execute("nodecanvas:create:relation", containerModel, connection.targetId);
+                    DesignerApp.execute("nodecanvas:create:relation:table", containerModel, connection.targetId);
                 }else{
-                    DesignerApp.execute("nodecanvas:create:relation" + targetNodeContainer.get('type'), containerModel, connection.targetId);
+                    DesignerApp.execute("nodecanvas:create:relation:" + targetNodeContainer.get('type'), containerModel, connection.targetId);
                 }
-
-
-
 
             }
 

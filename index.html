@@ -356,7 +356,7 @@
         ================================================== -->
         <script type="text/template" id="nodecontainer-map">
         <div>
-        <p> Presentation <b><%=name%>:<%=classname%></b>
+        <p> Mapping Plugin to <b><%=name%>:<%=classname%></b>
 
             <a href="#" class="btn edit btn-xs btn-container"><span class="glyphicon glyphicon-edit"></span> </a>        
             <a href="#" class="btn delete btn-xs btn-container"><span class="glyphicon glyphicon-remove-circle"></span> </a>
@@ -466,7 +466,15 @@
         <form class="form-horizontal">
             <fieldset>
                 <!-- Form Name -->
-                <legend>Create Map Presentation</legend>
+                <legend>Create Map View for <%=classname%></legend>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="container-classname">Map Name</label>
+                    <div class="col-md-4">
+                        <input id="container-classname" value="<%=classname%>" name="classname" type="text" placeholder="Model Class Name" class="form-control input-md">
+                        
+                    </div>
+                </div>                  
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="container-classname">Model Class Name</label>
@@ -477,26 +485,15 @@
                 </div>                
                 <!-- Select Basic -->
                 <div class="form-group classoption">
-                    <label class="col-md-4 control-label" for="latitude">Latitude</label>
+                    <label class="col-md-4 control-label" for="latitude">Location field</label>
                     <div class="col-md-4">
                         <select id="latitude" name="latitude" class="form-control">
-                            <% _.each(column.toJSON(), function(col) { %>
-                            <option value="<%=col.name%>" > <%=col.name%></option>
+                            <% _.each(locations, function(col) { %>
+                            <option value="<%=col.get('name')%>" > <%=col.get('name')%> <%=col.get('type')%></option>
                             <% }); %>
                         </select>
                     </div>
-                </div>
-                <!-- Select Basic -->
-                <div class="form-group classoption">
-                    <label class="col-md-4 control-label" for="longitude">Longitude</label>
-                    <div class="col-md-4">
-                        <select id="longitude" name="longitude" class="form-control">
-                            <% _.each(column.toJSON(), function(col) { %>
-                            <option value="<%=col.name%>" > <%=col.name%></option>
-                            <% }); %>
-                        </select>
-                    </div>
-                </div>                
+                </div>           
                 <!-- Save -->
                 <div class="form-group">
                     <div class="col-md-8" style="float: right">
@@ -786,7 +783,9 @@
             <script src="asset/app/js/nodeModule/node_modal_item.js"></script>
             <script src="asset/app/js/nodeModule/node_modal_relation.js"></script>
             <script src="asset/app/js/nodeModule/node_modal_seed.js"></script>
-            <script src="asset/app/js/nodeModule/node_modal_gist.js"></script>            
+            <script src="asset/app/js/nodeModule/node_modal_gist.js"></script> 
+            <script src="asset/app/js/nodeModule/node_modal_help.js"></script>            
+
             <script src="asset/app/js/nodeModule/node_controller.js"></script>            
             <!-- canvas -->
             <script src="asset/app/js/nodeCanvas/nodecanvas_view.js"></script>        

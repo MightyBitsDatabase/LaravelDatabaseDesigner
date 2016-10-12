@@ -54,22 +54,17 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     };
 
     viewNodeCanvas.on("canvas:addmap", function() {
-
-      var data =  {
-            classname:'asdsad',
-            color:'White',
-            increment:true,
-            name:'asdsad',
-            namespace:"",
-            position: {x:300, y:300},
-            softdelete:false,
-            timestamp:true,    
-            type:'maps'
+        var pivot_table =  {
+            "name": "pivot_name",
+            "classname": "pivot_name",
+            "position": {
+                            "x":200,
+                            "y":200
+                        },
+            "color":"Grey",
+            "type" : "maps"
         }
-
-        var nodeCanvas = DesignerApp.NodeEntities.getNodeCanvas();
-        nodeCanvas.add(data);
-
+        var nodeTable = DesignerApp.NodeEntities.AddNewNode(pivot_table);                        
     });
 
     viewNodeCanvas.on("canvas:createcontainer", function() {
