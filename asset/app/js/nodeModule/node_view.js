@@ -16,7 +16,7 @@ DesignerApp.module("NodeModule.Views", function(Views, DesignerApp, Backbone, Ma
                 }],
                 ["Label", {
                     cssClass: "label",
-                    label: srcTableContainer.get('classname') + ' - ' + dstRelationModel.get('relationtype') + ' ' + dstRelationModel.get('relatedmodel'),
+                    label: "",
                     location: 0.3,
                     id: "label"
                 }]

@@ -428,7 +428,7 @@ DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone,
 
             var nodeTable = nodeContainer.toJSON();
             console.log(nodeTable);
-            if (nodeTable.type === 'maps')
+            if (nodeTable.type === 'presentation')
             {
                 nodeTable['column'] = [];
                 nodeTable['relation'] = [];

@@ -8,7 +8,7 @@ DesignerApp.module("NodeCanvas.Views", function(Views, DesignerApp, Backbone, Ma
               var options = _.extend({model: tableContainer}, childViewOptions);
               var view;
               // create the child view instance
-              if (tableContainer.get('type') === 'maps')
+              if (tableContainer.get('type') === 'presentation')
               {
                   view = new DesignerApp.NodeModule.Views.TableMap(options);
               }else{

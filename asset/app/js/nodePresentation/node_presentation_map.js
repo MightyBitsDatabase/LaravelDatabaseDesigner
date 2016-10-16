@@ -121,7 +121,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
     });
 
     //on relation drag to presentation
-    DesignerApp.commands.setHandler("nodecanvas:create:relation:maps", function(containerModel, targetId) {
+    DesignerApp.commands.setHandler("nodecanvas:create:relation:presentation", function(containerModel, targetId) {
 
         var targetModel = DesignerApp.NodeEntities.getTableContainerFromNodeCid(targetId);
         var targetModelName = targetModel.get("name");
@@ -135,7 +135,7 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
             targetModel: targetModel,
         });
         
-        console.log('connect->', sourceModelName, 'to', targetModelName)
+        //console.log('connect->', sourceModelName, 'to', targetModelName)
 
         var modal = DesignerApp.NodeModule.Modal.CreateTestModal(view);
 
@@ -143,18 +143,12 @@ DesignerApp.module("NodeCanvas.Controller", function(Controller, DesignerApp, Ba
 
             var pres = DesignerApp.NodeEntities.getNewNodePresentationModel();
 
-            // defaults: {
-            //     name: '',
-            //     type: '',
-            //     model: ''
-            // },
             targetModel.set(data);
 
             pres.set({
                 model: targetModel.get('name'),
-                type: 'maps'                
             });
-            console.log(sourceModel)
+
             //add connecition detail to source node
             sourceModel.get('presentation').add(pres);
 
@@ -216,8 +210,25 @@ DesignerApp.module("NodeModule.Modal", function(Modal, DesignerApp, Backbone, Ma
 
 
 DesignerApp.module("NodeEntities", function(NodeEntities, DesignerApp, Backbone, Marionette, $, _) {
+    
+    var presentationId = 0;
 
+    NodeEntities.AddPresentationNode = function() {
+        presentationId++;
+        var presentation =  {
+            "name": "MAP_" + presentationId ,
+            "classname":  "MAP_" + presentationId,
+            "position": {
+                            "x":200,
+                            "y":200
+                        },
+            "color":"White",
+            "type" : "presentation"
+        }
 
+        var nodeTable = DesignerApp.NodeEntities.AddNewNode(presentation);  
+
+    }
 
 
     NodeEntities.AddPresentationRelation = function(node, relation) {
